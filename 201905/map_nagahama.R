@@ -4,23 +4,21 @@ library(ggplot2)
 library(sf)
 library(ggrepel)
 library(ggthemes)
-library(jpndistrict)
 
+#retrieve csv,geojson
 place <- read.csv("https://raw.githubusercontent.com/kmbsweb/data_process/master/201905/place_id.csv",
                   header=T, fileEncoding="Shift_JIS",as.is = T)
 road <- "https://raw.githubusercontent.com/kmbsweb/data_process/master/201905/roads.json"
 rail <- "https://raw.githubusercontent.com/kmbsweb/data_process/master/201905/railways.json"
 river <- "https://raw.githubusercontent.com/kmbsweb/data_process/master/201905/waterways.json"
 
+#geojson to sf
 road <- geojson_sf(road)
 rail <- geojson_sf(rail)
 river <- geojson_sf(river)
 
-#データの取得
-pref_25 <- jpn_pref(25)
-
+#plot
 ggplot() +
-  geom_sf(data=pref_25, fill = 'white') +
   geom_sf(data=river, color = "LightSteelblue2",size=1.0)+
   geom_sf(data=road, color = "gray",size=0.15) +
   geom_sf(data=rail, color = "black",size=0.3) +
@@ -34,5 +32,5 @@ ggplot() +
 
 #geom_text_repel(aes(x=134.88,y=34.80, label = "Kakogawa river"), col = "navy", size = 2.5, segment.color = NA,alpha=0.9 )
 #geom_text_repel(aes(x=134.82,y=34.75, label = "Estimated\n flooding"), col = "darkred", size = 2.5, segment.color = NA,alpha=0.7)
-  
+
 
